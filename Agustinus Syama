@@ -1,0 +1,34 @@
+k_range = range(1,31)  #1-30
+k_score = []
+for k in k_range:
+    knn=KNeighborsClassifier(n_neighbors=k)
+    score= cross_val_score(knn, x, y, cv=10, scoring='accuracy')
+    k_score.append(score.mean())
+print(k_score)
+import plotly.plotly as py
+import plotly.graph_objs as go
+import plotly.tools as tls
+tls.set_credentials_file(username='piyutdyoni', api_key='0fv0PaGxGfWzT72e6S7m')
+trace1 = go.Scatter(
+                    x=k_range, y=k_score, # Data
+                    mode='lines', name='K of KNN' # Additional options
+                   )
+layout = go.Layout(title='Score of K in KNN',
+                   plot_bgcolor='rgb(230)')
+fig = go.Figure(data=[trace1], layout=layout)
+# Plot data in the notebook
+py.iplot(fig, filename='score of K in KNN')
+
+Jadi kedua linechart ini menggambarkan kalo K yang menghasilkan score tertinggi adalah 13, 18, dan 20. Tapi karena batas tertinggi ada di 20, soalnya abis itu scorenya cenderung turun, maka kita ambil pinalty bahwa 20 adalah K yang paling mentok dan menghasilkan score tinggi. Soo… mari kita buktikan apakah 20 adalah jawaban yang benar.
+
+knn=KNeighborsClassifier(n_neighbors=20)
+score=cross_val_score(knn, x, y, cv=10, scoring='accuracy').mean()
+print(score) #well, hasilnya 98% ^^
+Naah sekarang at least kamu ga ngerasa bodo-bodo amat laah.. kita abis mempraktekan Machine Learning. Gue personally percaya semua orang ga ada yang bodo, you just need to find out what are you good at.
+
+Thank You! ^^
+
+512
+
+
+18
